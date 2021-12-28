@@ -19,6 +19,7 @@ setInterval(async () => {
 	if (currentPower <= 5 && cachedPower <= 5) {
 		await sendRequest('Power%20OFF');
 		console.log('The power plug has been switched off.');
+		cachedPower = undefined;
 	}
 
 	cachedPower = currentPower;
