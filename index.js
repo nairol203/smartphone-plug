@@ -10,15 +10,16 @@ const sendRequest = async cmd => {
 
 let cachedPower;
 
-const checkPowerId = setInterval(async () => {
+setInterval(async () => {
 	const data = await sendRequest('Status%208');
 	const currentPower = data.StatusSNS.ENERGY.Power;
+
+	if (data.StatusSNS.ENERGY.Voltage === 0) return;
 
 	if (currentPower <= 5 && cachedPower <= 5) {
 		await sendRequest('Power%20OFF');
 		console.log('The power plug has been switched off.');
-		clearInterval(checkPowerId);
 	}
 
 	cachedPower = currentPower;
-}, 5000);
+}, 30000);
